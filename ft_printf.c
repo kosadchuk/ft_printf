@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: kosadchu <kosadchu@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/23 10:29:49 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/02/26 15:57:25 by kosadchu         ###   ########.fr       */
+/*   Created: 2019/03/02 13:48:43 by kosadchu          #+#    #+#             */
+/*   Updated: 2019/03/02 16:48:16 by kosadchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,8 @@ int		ft_printf(const char *f, ...)
 {
 	va_list		ap;
 
-	g_buf.i = 0;
-	g_buf.it = 0;
 	va_start(ap, f);
-	while (f[g_buf.it])
-	{
-		if (f[g_buf.it] == '%')
-		{
-			check_spec(f);
-		}
-		save_buf(f[g_buf.it]);
-		g_buf.it++;
-	}
+	check_format(f, ap);
 	va_end(ap);
-	return (0);
+	return (g_bf.i);
 }

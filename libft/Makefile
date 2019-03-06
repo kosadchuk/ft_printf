@@ -6,7 +6,7 @@
 #    By: kosadchu <kosadchu@student.unit.ua>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/10/28 17:47:49 by kosadchu          #+#    #+#              #
-#    Updated: 2019/02/15 19:15:05 by kosadchu         ###   ########.fr        #
+#    Updated: 2019/02/28 13:58:13 by kosadchu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRCS :=		ft_strdup.c \
 			ft_putnbr.c \
 			ft_putstr.c \
 			ft_itoa.c \
+			ft_itoa_base.c \
 			ft_atoi.c \
 			ft_strcpy.c \
 			ft_strncpy.c \

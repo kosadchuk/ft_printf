@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: kosadchu <kosadchu@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/23 10:31:31 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/02/26 16:47:12 by kosadchu         ###   ########.fr       */
+/*   Created: 2019/03/02 13:44:51 by kosadchu          #+#    #+#             */
+/*   Updated: 2019/03/05 17:40:29 by kosadchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,34 +16,42 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdarg.h>
+# include <stdint.h>
 # include <stdio.h>
 
-typedef struct	s_buf
+typedef struct	s_bf
 {
 	char		buf[4096];
 	int			i;
 	int			it;
-}				t_buf;
+}				t_bf;
 
-typedef struct	s_flags
+typedef struct	s_lst
 {
-	int			fl_m;
-	int			fl_p;
-	int			fl_s;
-	int			fl_z;
-	int			fl_o;
-	int			fl_wd;
-}				t_flag;
+	int			width;
+	int			prec;
+	char		type;
+}				t_lst;
 
-typedef struct	s_type
+typedef struct	s_fl
 {
-	int			
-};
+	int			mn;
+	int			pl;
+	int			oc;
+	int			zr;
+	int			sp;
+}				t_fl;
 
-
-t_buf			g_buf;
-t_flag			g_flag;
+t_bf			g_bf;
+t_lst			g_lst;
+t_fl			g_fl;
 int				ft_printf(const char *f, ...);
-void			save_buf(char c);
+void			check_format(const char *f, va_list ap);
+void			save_buff(char c);
+void			check_spec(const char *f, va_list ap);
+void			save_flags(const char *f);
+void			type_char(const char *f, va_list ap);
+void			check_width(const char *f);
+void			make_width(int	len, char *s);
 
 #endif

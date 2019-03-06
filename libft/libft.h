@@ -6,7 +6,7 @@
 /*   By: kosadchu <kosadchu@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/30 12:45:54 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/02/15 19:16:04 by kosadchu         ###   ########.fr       */
+/*   Updated: 2019/02/28 15:05:59 by kosadchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,5 +86,6 @@ void				ft_swap(int *a, int *b);
 int					ft_sqrt(int nb);
 void				ft_free_array(char **c);
 int					ft_lenint(int n);
+char				*ft_itoa_base(int value, int base);
 
 #endif
