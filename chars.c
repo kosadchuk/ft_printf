@@ -6,81 +6,67 @@
 /*   By: kosadchu <kosadchu@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 16:13:19 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/03/05 17:57:30 by kosadchu         ###   ########.fr       */
+/*   Updated: 2019/03/11 13:56:41 by kosadchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	make_width(int len, char *s)
+static void	pars_str(char *s, int len)
 {
-	int		w;
-
-	if (g_lst.width > len && g_fl.mn == 0)
-		{
-			if (g_lst.prec > 0 && g_lst.prec < len)
-			{
-				w = g_lst.width - len + (len - g_lst.prec);
-				while (w-- > 0)
-					g_bf.buf[g_bf.i++] = ' ';
-				while (*s && g_lst.prec-- > 0)
-					g_bf.buf[g_bf.i++] = *s++;
-			}
-			else if (g_lst.prec < len && g_lst.width > g_lst.prec)
-			{
-				w = g_lst.width - g_lst.prec;
-				while (w-- > 0)
-					g_bf.buf[g_bf.i++] = ' ';
-				while (*s && g_lst.prec-- > 0)
-					g_bf.buf[g_bf.i++] = *s++;
-			}
-		}
-	else if (g_lst.width > len && g_fl.mn == 1)
+	(g_lst.prec > 0 && g_lst.prec < len) ? len = g_lst.prec : len;
+	if (g_lst.width > len && g_lst.dot != 1)
 	{
-		if (g_lst.prec > 0 && g_lst.prec < len)
+		g_lst.width -= len;
+		print_space(s, len);
+	}
+	else if (g_lst.width > 0 && g_lst.dot == 1)
+		while (g_lst.width--)
+			g_bf.buf[g_bf.i++] = ' ';
+	else if (g_lst.dot != 1)
+		while (*s && len--)
+			g_bf.buf[g_bf.i++] = *s++;
+}
+
+static void	pars_char(char c, int len)
+{
+	if (g_lst.width > len)
+	{
+		g_lst.width -= len;
+		if (g_fl.mn == 1)
 		{
-			w = g_lst.width - len + (len - g_lst.prec);
-			while (*s && g_lst.prec-- > 0)
-				g_bf.buf[g_bf.i++] = *s++;
-			while (w-- > 0)
+			g_bf.buf[g_bf.i++] = c;
+			while (g_lst.width--)
 				g_bf.buf[g_bf.i++] = ' ';
 		}
 		else
 		{
-			w = g_lst.width - len;
-			while (*s)
-				g_bf.buf[g_bf.i++] = *s++;
-			while (w-- > 0)
+			while (g_lst.width--)
 				g_bf.buf[g_bf.i++] = ' ';
+			g_bf.buf[g_bf.i++] = c;
 		}
 	}
+	else
+		g_bf.buf[g_bf.i++] = c;
 }
 
-void	type_char(const char *f, va_list ap)
+void	str_char(const char *f, va_list ap)
 {
 	char	*s;
-	char	ch[2];
+	char	ch;
 	int		len;
-	int		w;
 
+	if (f[g_bf.it] == 's')
+	{
+		s = va_arg(ap, char *);
+		len = ft_strlen(s);
+		pars_str(s, len);
+	}
 	if (f[g_bf.it] == 'c')
 	{
-		ch[0] = (char) va_arg(ap, int);
-		ch[1] = '\0';
-		if (g_lst.width > 1)
-			make_width(1, ch);
-		else
-			g_bf.buf[g_bf.i++] = ch[0];
+		ch = (char)va_arg(ap, int);
+		pars_char(ch, 1);
 	}
-	else if (f[g_bf.it] == 's')
-	{
-		s = va_arg(ap, char*);
-		len = ft_strlen(s);
-		if (g_lst.width > len)
-			make_width(len, s);
-		else
-			while (*s)
-				g_bf.buf[g_bf.i++] = *s++;
-	}
+	if (f[g_bf.it] == '%')
+		g_bf.buf[g_bf.i++] = '%';
 }
-

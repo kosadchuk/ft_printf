@@ -6,7 +6,7 @@
 /*   By: kosadchu <kosadchu@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 13:44:51 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/03/05 17:40:29 by kosadchu         ###   ########.fr       */
+/*   Updated: 2019/03/11 12:43:55 by kosadchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdarg.h>
 # include <stdint.h>
 # include <stdio.h>
+# include <limits.h>
 
 typedef struct	s_bf
 {
@@ -30,7 +31,9 @@ typedef struct	s_lst
 {
 	int			width;
 	int			prec;
+	int			dot;
 	char		type;
+	char		sz[2];
 }				t_lst;
 
 typedef struct	s_fl
@@ -50,8 +53,11 @@ void			check_format(const char *f, va_list ap);
 void			save_buff(char c);
 void			check_spec(const char *f, va_list ap);
 void			save_flags(const char *f);
-void			type_char(const char *f, va_list ap);
+void			str_char(const char *f, va_list ap);
 void			check_width(const char *f);
-void			make_width(int	len, char *s);
+void			print_space(char *s, int len);
+void			decimal(const char *f, va_list ap);
+void			free_flags(void);
+char			*ft_itoa_bs_pf(intmax_t d, uintmax_t u, int base);
 
 #endif
