@@ -6,13 +6,12 @@
 /*   By: kosadchu <kosadchu@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 13:44:51 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/03/11 12:43:55 by kosadchu         ###   ########.fr       */
+/*   Updated: 2019/03/12 14:38:13 by kosadchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
-# include "libft/libft.h"
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdarg.h>
@@ -43,6 +42,7 @@ typedef struct	s_fl
 	int			oc;
 	int			zr;
 	int			sp;
+	int			nl;
 }				t_fl;
 
 t_bf			g_bf;
@@ -56,8 +56,18 @@ void			save_flags(const char *f);
 void			str_char(const char *f, va_list ap);
 void			check_width(const char *f);
 void			print_space(char *s, int len);
-void			decimal(const char *f, va_list ap);
+void			decimal(va_list ap);
+void			numbers(const char *f, va_list ap);
 void			free_flags(void);
 char			*ft_itoa_bs_pf(intmax_t d, uintmax_t u, int base);
+void			*ft_memalloc(size_t size);
+void			ft_putstr(char const *s);
+char			*ft_strchr(const char *s, int c);
+char			*ft_strsub(char const *s, unsigned int start, size_t len);
+int				ft_atoi(const char *str);
+size_t			ft_strlen(const char *s);
+void			ft_bzero(void *s, size_t n);
+void			pars_char(char c, int len);
+void			space(void);
 
 #endif

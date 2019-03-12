@@ -6,17 +6,11 @@
 /*   By: kosadchu <kosadchu@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 16:06:40 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/03/11 15:13:36 by kosadchu         ###   ########.fr       */
+/*   Updated: 2019/03/12 17:54:18 by kosadchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-void	save_buff(char c)
-{
-	g_bf.buf[g_bf.i] = c;
-	g_bf.i++;
-}
 
 void	free_flags(void)
 {
@@ -28,21 +22,37 @@ void	free_flags(void)
 	g_lst.type = '0';
 }
 
+void	space(void)
+{
+	while (g_lst.width--)
+		g_bf.buf[g_bf.i++] = ' ';
+}
+
 void	print_space(char *s, int len)
 {
 	if (g_fl.mn == 1)
 	{
 		while (*s && len--)
 			g_bf.buf[g_bf.i++] = *s++;
-		while (g_lst.width--)
-			g_bf.buf[g_bf.i++] = ' ';
+		space();
 	}
 	else if (g_fl.mn != 1)
 	{
-		while (g_lst.width--)
-			g_bf.buf[g_bf.i++] = ' ';
+		space();
 		while (*s && len--)
 			g_bf.buf[g_bf.i++] = *s++;
+	}
+}
+
+void	print_buf(void)
+{
+	int		l;
+
+	l = 0;
+	while (l < g_bf.i)
+	{
+		write(1, &g_bf.buf[l], 1);
+		l++;
 	}
 }
 
@@ -50,7 +60,9 @@ void	check_format(const char *f, va_list ap)
 {
 	g_bf.i = 0;
 	g_bf.it = 0;
-	while(f[g_bf.it])
+	int		j;
+	j = 0;
+	while(f[g_bf.it] != '\0')
 	{
 		g_lst.width = 0;
 		g_lst.prec = 0;
@@ -60,11 +72,11 @@ void	check_format(const char *f, va_list ap)
 			free_flags();
 			check_spec(f, ap);
 		}
-		if (f[g_bf.it] != '%')
+		if (f[g_bf.it] != '%' && f[g_bf.it] != '\0')
 		{
-			save_buff(f[g_bf.it]);
+			g_bf.buf[g_bf.i++] = f[g_bf.it];
 			g_bf.it++;
 		}
 	}
-	ft_putstr(g_bf.buf);
+	print_buf();
 }

@@ -6,7 +6,7 @@
 /*   By: kosadchu <kosadchu@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:47:51 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/03/11 13:26:12 by kosadchu         ###   ########.fr       */
+/*   Updated: 2019/03/12 14:39:12 by kosadchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,20 @@ intmax_t	cast_dec(va_list ap)
 		return (va_arg(ap, int));
 }
 
-void	decimal(const char *f, va_list ap)
+void	decimal(va_list ap)
 {
 	intmax_t	d;
 	char		*s;
 
+	g_lst.type = 'd';
+	d = cast_dec(ap);
+	s = ft_itoa_bs_pf(d, 0, 10);
+	while (*s)
+		g_bf.buf[g_bf.i++] = *s++;
+}
+
+void	numbers(const char *f, va_list ap)
+{
 	if (f[g_bf.it] == 'd')
-	{
-		g_lst.type = 'd';
-		d = cast_dec(ap);
-		s = ft_itoa_bs_pf(d, 0, 10);
-		while (*s)
-			g_bf.buf[g_bf.i++] = *s++;
-	}
+		decimal(ap);
 }

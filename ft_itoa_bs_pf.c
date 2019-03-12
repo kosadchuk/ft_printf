@@ -6,18 +6,11 @@
 /*   By: kosadchu <kosadchu@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/28 16:23:50 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/03/11 13:49:55 by kosadchu         ###   ########.fr       */
+/*   Updated: 2019/03/12 18:54:22 by kosadchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-static intmax_t		minus(intmax_t d)
-{
-	if (d < 0)
-		d = -d;
-	return (d);
-}
 
 char	*reverse(int i, char *res)
 {
@@ -59,19 +52,24 @@ char	*base_ten(char *str, intmax_t d)
 	int			len;
 	intmax_t	tmp;
 	char		*res;
+	int			min;
 
 	len = (d < 0) ? 2 : 1;
+	min = (d < 0) ? 1 : 0;
 	tmp = d;
 	while (tmp /= 10)
 		len++;
+	(d < 0) ? d *= -1 : d;
 	res = (char*)ft_memalloc(sizeof(char) * len + 1);
-	(d < 0 && g_lst.prec < len) ? res[0] = '-' : res[len];
 	res[len--] = '\0';
-	while (len > 0)
+	res[len--] = str[d % 10];
+	d /= 10;
+	while (len > -1)
 	{
-		res[len--] = str[minus(d % 10)];
+		res[len--] = str[d % 10];
 		d /= 10;
 	}
+	(min == 1) ? res[0] = '-' : 0;
 	return (res);
 }
 
