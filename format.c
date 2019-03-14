@@ -6,7 +6,7 @@
 /*   By: kosadchu <kosadchu@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 16:06:40 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/03/12 17:54:18 by kosadchu         ###   ########.fr       */
+/*   Updated: 2019/03/14 15:00:01 by kosadchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,26 +20,25 @@ void	free_flags(void)
 	g_fl.zr = 0;
 	g_fl.sp = 0;
 	g_lst.type = '0';
+	g_lst.prec = 0;
+	g_lst.width = 0;
 }
 
-void	space(void)
+void	space(int len, char c)
 {
-	while (g_lst.width--)
-		g_bf.buf[g_bf.i++] = ' ';
+	while (len--)
+		g_bf.buf[g_bf.i++] = c;
 }
 
-void	print_space(char *s, int len)
+void	save_buff(char *s, int len, int minus)
 {
-	if (g_fl.mn == 1)
-	{
+	if (minus == 0)
 		while (*s && len--)
 			g_bf.buf[g_bf.i++] = *s++;
-		space();
-	}
-	else if (g_fl.mn != 1)
+	else if (minus == 1)
 	{
-		space();
-		while (*s && len--)
+		s++;
+		while (*s)
 			g_bf.buf[g_bf.i++] = *s++;
 	}
 }

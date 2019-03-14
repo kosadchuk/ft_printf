@@ -6,7 +6,7 @@
 /*   By: kosadchu <kosadchu@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 16:50:30 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/03/11 18:35:42 by kosadchu         ###   ########.fr       */
+/*   Updated: 2019/03/14 17:10:55 by kosadchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	check_width(const char *f)
 {
 	char	*s;
+	char	*tmp;
 	int		len;
 
 	len = 0;
@@ -24,6 +25,8 @@ void	check_width(const char *f)
 		len++;
 	}
 	s = ft_strsub(f, g_bf.it - len, len);
+	tmp = s;
+	free (tmp);
 	g_lst.width = ft_atoi(s);
 }
 
@@ -31,12 +34,19 @@ void	check_prec(const char *f)
 {
 	char	*s;
 	int		len;
+	char	*tmp;
 
 	len = 0;
 	if (f[g_bf.it] == '.' && !ft_strchr("0123456789", f[g_bf.it + 1]))
 	{
 		g_lst.dot = 1;
 		g_bf.it++;
+	}
+	else if (f[g_bf.it] == '.' && f[g_bf.it + 1] == '0'
+		&& !ft_strchr("123456789", f[g_bf.it + 2]))
+	{
+		g_lst.dot = 1;
+		g_bf.it += 2;
 	}
 	else
 	{
@@ -47,6 +57,8 @@ void	check_prec(const char *f)
 			len++;
 		}
 		s = ft_strsub(f, g_bf.it - len, len);
+		tmp = s;
+		free (tmp);
 		g_lst.prec = ft_atoi(s);
 	}
 }
@@ -89,6 +101,8 @@ void	save_size(const char *f)
 		g_lst.sz[1] = 'h';
 		g_bf.it++;
 	}
+	else if (f[g_bf.it] == 'L' && f[g_bf.it + 1] == 'f')
+		g_lst.sz[0] = 'L';
 	g_bf.it++;
 }
 

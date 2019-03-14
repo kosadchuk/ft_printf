@@ -6,11 +6,25 @@
 /*   By: kosadchu <kosadchu@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 16:13:19 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/03/12 17:52:39 by kosadchu         ###   ########.fr       */
+/*   Updated: 2019/03/13 19:49:11 by kosadchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+void	print_space(char *s, int len)
+{
+	if (g_fl.mn == 1)
+	{
+		save_buff(s, len, 0);
+		space(g_lst.width, ' ');
+	}
+	else if (g_fl.mn != 1)
+	{
+		space(g_lst.width, ' ');
+		save_buff(s, len, 0);
+	}
+}
 
 static void	pars_str(char *s, int len)
 {
@@ -21,10 +35,9 @@ static void	pars_str(char *s, int len)
 		print_space(s, len);
 	}
 	else if (g_lst.width > 0 && g_lst.dot == 1)
-		space();
+		space(g_lst.width, ' ');
 	else if (g_lst.dot != 1)
-		while (*s && len--)
-			g_bf.buf[g_bf.i++] = *s++;
+		save_buff(s, len, 0);
 }
 
 void	pars_char(char c, int len)
@@ -35,11 +48,11 @@ void	pars_char(char c, int len)
 		if (g_fl.mn == 1)
 		{
 			g_bf.buf[g_bf.i++] = c;
-			space();
+			space(g_lst.width, ' ');
 		}
 		else
 		{
-			space();
+			space(g_lst.width, ' ');
 			g_bf.buf[g_bf.i++] = c;
 		}
 	}

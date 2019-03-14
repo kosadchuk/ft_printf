@@ -6,7 +6,7 @@
 /*   By: kosadchu <kosadchu@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/28 16:23:50 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/03/12 18:54:22 by kosadchu         ###   ########.fr       */
+/*   Updated: 2019/03/14 14:55:59 by kosadchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ char	*reverse(int i, char *res)
 char	*uns_base(char *str, uintmax_t u, int base)
 {
 	char		*res;
+	char		*t;
 	int			len;
 	uintmax_t	tmp;
 	int			i;
@@ -42,9 +43,11 @@ char	*uns_base(char *str, uintmax_t u, int base)
 	while (u > 0)
 	{
 		res[i++] = str[u % base];
+		u /= base;
 	}
-	res = reverse(i, res);
-	return (res);
+	t = reverse(i, res);
+	free(res);
+	return (t);
 }
 
 char	*base_ten(char *str, intmax_t d)
@@ -77,6 +80,7 @@ char	*ft_itoa_bs_pf(intmax_t d, uintmax_t u, int base)
 {
 	char		*str;
 	char		*res;
+	char		*tmp;
 
 	str = "0123456789";
 	(g_lst.type == 'o') ? str = "01234567" : 0;
@@ -93,6 +97,8 @@ char	*ft_itoa_bs_pf(intmax_t d, uintmax_t u, int base)
 	else if (g_lst.type == 'x' || g_lst.type == 'X')
 		res = uns_base(str, u, 16);
 	else if (g_lst.type == 'u')
-		res = uns_base(str, u, 10);	
+		res = uns_base(str, u, 10);
+	tmp = res;
+	free(tmp);
 	return (res);
 }
