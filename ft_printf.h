@@ -6,7 +6,7 @@
 /*   By: kosadchu <kosadchu@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 13:44:51 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/03/14 16:24:56 by kosadchu         ###   ########.fr       */
+/*   Updated: 2019/03/14 16:37:15 by kosadchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,6 @@ void			two_zero(char *num, int len);
 void			clean_zero(void);
 intmax_t		cast_dec(va_list ap);
 uintmax_t		cast_hex(va_list ap);
+void			heximal(const char *f, va_list ap);
 
 #endif

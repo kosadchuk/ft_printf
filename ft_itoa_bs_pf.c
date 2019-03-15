@@ -6,7 +6,7 @@
 /*   By: kosadchu <kosadchu@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/28 16:23:50 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/03/14 14:55:59 by kosadchu         ###   ########.fr       */
+/*   Updated: 2019/03/15 17:33:01 by kosadchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ char	*reverse(int i, char *res)
 char	*uns_base(char *str, uintmax_t u, int base)
 {
 	char		*res;
-	char		*t;
 	int			len;
 	uintmax_t	tmp;
 	int			i;
@@ -45,9 +44,15 @@ char	*uns_base(char *str, uintmax_t u, int base)
 		res[i++] = str[u % base];
 		u /= base;
 	}
-	t = reverse(i, res);
-	free(res);
-	return (t);
+	res = reverse(i, res);
+	return (res);
+}
+
+void	conv(intmax_t *d, int *len, char **str, char **res)
+{
+	((*d) < 0) ? (*res)[(*len)--] = (*str)[-((*d) % 10)] : 0;
+	((*d) >= 0) ? (*res)[(*len)--] = (*str)[(*d) % 10] : 0;
+	(*d) /= 10;
 }
 
 char	*base_ten(char *str, intmax_t d)
@@ -62,16 +67,12 @@ char	*base_ten(char *str, intmax_t d)
 	tmp = d;
 	while (tmp /= 10)
 		len++;
-	(d < 0) ? d *= -1 : d;
 	res = (char*)ft_memalloc(sizeof(char) * len + 1);
 	res[len--] = '\0';
-	res[len--] = str[d % 10];
-	d /= 10;
+	if (len < 20)
+		conv(&d, &len, &str, &res);
 	while (len > -1)
-	{
-		res[len--] = str[d % 10];
-		d /= 10;
-	}
+		conv(&d, &len, &str, &res);
 	(min == 1) ? res[0] = '-' : 0;
 	return (res);
 }
@@ -99,6 +100,6 @@ char	*ft_itoa_bs_pf(intmax_t d, uintmax_t u, int base)
 	else if (g_lst.type == 'u')
 		res = uns_base(str, u, 10);
 	tmp = res;
-	free(tmp);
+	free(res);
 	return (res);
 }

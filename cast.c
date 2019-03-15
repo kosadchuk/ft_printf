@@ -6,7 +6,7 @@
 /*   By: kosadchu <kosadchu@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 13:55:45 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/03/14 17:07:06 by kosadchu         ###   ########.fr       */
+/*   Updated: 2019/03/14 17:06:45 by kosadchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	cpy_str(void)
 	char	*s;
 	char	*tmp;
 	int		i;
+	int		j;
 
 	i = 0;
 	s = ft_strsub(g_bf.buf, g_fl.save_i, g_bf.i - g_fl.save_i);
@@ -78,8 +79,6 @@ void	cpy_str(void)
 		g_bf.buf[g_bf.i++] = s[i];
 		i++;
 	}
-	tmp = s;
-	free(tmp);
 }
 
 void	clean_zero(void)

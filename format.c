@@ -6,7 +6,7 @@
 /*   By: kosadchu <kosadchu@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 16:06:40 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/03/14 15:00:01 by kosadchu         ###   ########.fr       */
+/*   Updated: 2019/03/13 20:18:39 by kosadchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ void	free_flags(void)
 	g_fl.zr = 0;
 	g_fl.sp = 0;
 	g_lst.type = '0';
-	g_lst.prec = 0;
-	g_lst.width = 0;
 }
 
 void	space(int len, char c)

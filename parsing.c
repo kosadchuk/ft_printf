@@ -6,7 +6,7 @@
 /*   By: kosadchu <kosadchu@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 20:20:10 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/03/14 15:56:26 by kosadchu         ###   ########.fr       */
+/*   Updated: 2019/03/14 18:34:26 by kosadchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,12 @@ void	make_prec_width(int len)
 
 void	pars_wm(char *str, int len)
 {
-	if (g_fl.pl == 1 && str[0] != '-' && g_lst.width < len)
+	if (g_fl.pl == 1 && str[0] != '-' && g_lst.width < len
+		&& g_lst.type != 'u')
 		g_bf.buf[g_bf.i++] = '+';
-	if (g_fl.sp == 1 && str[0] != '-' && g_fl.pl == 0 && g_lst.prec < 1)
-		g_bf.buf[g_bf.i++] = ' ';
+	if (g_fl.sp == 1 && str[0] != '-' && g_fl.pl == 0 && g_lst.prec < 1
+		&& g_lst.type != 'u')
+			g_bf.buf[g_bf.i++] = ' ';
 	(g_fl.pl == 1 || (g_fl.pl == 1 && g_fl.zr == 1)) ? g_lst.width-- : 0;
 	(str[0] == '-' && g_fl.zr == 1 && g_fl.pl == 0) ? g_lst.width-- : 0;
 	(str[0] == '-' && g_fl.zr == 0 && g_fl.pl == 0) ? g_lst.width-- : 0;
@@ -60,7 +62,8 @@ void	without_minus(char *str, int len)
 	pars_wm(str, len);
 	(g_lst.width > 0 && g_fl.zr == 0) ? space(g_lst.width, ' ') : 0;
 	if_oct(str, len);
-	if (g_fl.pl == 1 && str[0] != '-' && g_bf.buf[g_bf.i - 1] != '+')
+	if (g_fl.pl == 1 && str[0] != '-' && g_bf.buf[g_bf.i - 1] != '+'
+		&& g_lst.type != 'u')
 		g_bf.buf[g_bf.i++] = '+';
 	if (g_lst.width > 0 && g_fl.zr == 1)
 	{
