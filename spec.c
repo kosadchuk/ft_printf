@@ -6,7 +6,7 @@
 /*   By: kosadchu <kosadchu@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 16:50:30 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/03/14 17:11:42 by kosadchu         ###   ########.fr       */
+/*   Updated: 2019/03/18 19:51:55 by kosadchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,5 +123,6 @@ void	check_spec(const char *f, va_list ap)
 	if (f[g_bf.it] == '%')
 		pars_char('%', 1);
 	g_bf.it++;
-	(f[g_bf.it] == '.') ? g_bf.it++ : g_bf.it;
+//	(f[g_bf.it] == '.' && f[g_bf.it + 1] != '%'
+//		&& f[g_bf.it + 1] != '\n') ? g_bf.it++ : 0;
 }

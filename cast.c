@@ -6,7 +6,7 @@
 /*   By: kosadchu <kosadchu@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 13:55:45 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/03/14 17:06:45 by kosadchu         ###   ########.fr       */
+/*   Updated: 2019/03/15 15:53:07 by kosadchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ uintmax_t	cast_hex(va_list ap)
 		return ((unsigned short int)va_arg(ap, unsigned int));
 	else if (g_lst.sz[0] == 'h' && g_lst.sz[1] == 'h')
 		return ((unsigned char)va_arg(ap, unsigned int));
+	else if (g_lst.type == 'p')
+		return (va_arg(ap, unsigned long int));
 	else
 		return (va_arg(ap, unsigned int));
 }
@@ -62,7 +64,6 @@ void	cpy_str(void)
 	char	*s;
 	char	*tmp;
 	int		i;
-	int		j;
 
 	i = 0;
 	s = ft_strsub(g_bf.buf, g_fl.save_i, g_bf.i - g_fl.save_i);
@@ -79,6 +80,8 @@ void	cpy_str(void)
 		g_bf.buf[g_bf.i++] = s[i];
 		i++;
 	}
+	tmp = s;
+	free(tmp);
 }
 
 void	clean_zero(void)

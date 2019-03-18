@@ -6,7 +6,7 @@
 /*   By: kosadchu <kosadchu@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/28 16:23:50 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/03/15 17:33:01 by kosadchu         ###   ########.fr       */
+/*   Updated: 2019/03/15 17:32:28 by kosadchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ char	*reverse(int i, char *res)
 char	*uns_base(char *str, uintmax_t u, int base)
 {
 	char		*res;
+	char		*t;
 	int			len;
 	uintmax_t	tmp;
 	int			i;
@@ -44,8 +45,9 @@ char	*uns_base(char *str, uintmax_t u, int base)
 		res[i++] = str[u % base];
 		u /= base;
 	}
-	res = reverse(i, res);
-	return (res);
+	t = reverse(i, res);
+	free(res);
+	return (t);
 }
 
 void	conv(intmax_t *d, int *len, char **str, char **res)
@@ -85,7 +87,7 @@ char	*ft_itoa_bs_pf(intmax_t d, uintmax_t u, int base)
 
 	str = "0123456789";
 	(g_lst.type == 'o') ? str = "01234567" : 0;
-	(g_lst.type == 'x') ? str = "0123456789abcdef" : 0;
+	(g_lst.type == 'x' || g_lst.type == 'p') ? str = "0123456789abcdef" : 0;
 	(g_lst.type == 'X') ? str = "0123456789ABCDEF" : 0;
 	if (base < 2 || base > 16)
 		return (NULL);
@@ -95,11 +97,11 @@ char	*ft_itoa_bs_pf(intmax_t d, uintmax_t u, int base)
 		res = base_ten(str, d);
 	if (g_lst.type == 'o')
 		res = uns_base(str, u, 8);
-	else if (g_lst.type == 'x' || g_lst.type == 'X')
+	else if (g_lst.type == 'x' || g_lst.type == 'X' || g_lst.type == 'p')
 		res = uns_base(str, u, 16);
 	else if (g_lst.type == 'u')
 		res = uns_base(str, u, 10);
 	tmp = res;
-	free(res);
+	free(tmp);
 	return (res);
 }

@@ -6,7 +6,7 @@
 /*   By: kosadchu <kosadchu@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:47:51 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/03/14 18:27:29 by kosadchu         ###   ########.fr       */
+/*   Updated: 2019/03/15 15:56:53 by kosadchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,13 @@ void	heximal(const char *f, va_list ap)
 	(f[g_bf.it] == 'x') ? g_lst.type = 'x' : 0;
 	(f[g_bf.it] == 'X') ? g_lst.type = 'X' : 0;
 	(f[g_bf.it] == 'u') ? g_lst.type = 'u' : 0;
+	(f[g_bf.it] == 'p') ? g_lst.type = 'p' : 0;
 	u = cast_hex(ap);
 	(f[g_bf.it] == 'o') ? s = ft_itoa_bs_pf(0, u, 8) : 0;
 	(f[g_bf.it] == 'x') ? s = ft_itoa_bs_pf(0, u, 16) : 0;
 	(f[g_bf.it] == 'X') ? s = ft_itoa_bs_pf(0, u, 16) : 0;
 	(f[g_bf.it] == 'u') ? s = ft_itoa_bs_pf(0, u, 10) : 0;
+	(f[g_bf.it] == 'p') ? s = ft_itoa_bs_pf(0, u, 16) : 0;
 	len = ft_strlen(s);
 	two_zero(s, len);
 	(g_lst.prec < len) ? g_lst.prec = 0 : 0;
@@ -67,8 +69,7 @@ void	numbers(const char *f, va_list ap)
 	if (f[g_bf.it] == 'd' || f[g_bf.it] == 'i')
 		decimal(f, ap);
 	if (f[g_bf.it] == 'o' || f[g_bf.it] == 'x' || f[g_bf.it] == 'X'
-		|| f[g_bf.it] == 'u')
+		|| f[g_bf.it] == 'u' || f[g_bf.it] == 'p')
 			heximal(f, ap);
 	clean_zero();
 }
-

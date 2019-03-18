@@ -6,7 +6,7 @@
 /*   By: kosadchu <kosadchu@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 20:20:10 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/03/14 18:34:26 by kosadchu         ###   ########.fr       */
+/*   Updated: 2019/03/14 18:34:37 by kosadchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	if_oct(char *s, int l)
 {
-	if (g_lst.type == 'x' && g_fl.oc == 1 && !(s[0] == '0' && l == 1))
+	if ((g_lst.type == 'x' && g_fl.oc == 1 && !(s[0] == '0' && l == 1))
+		|| g_lst.type == 'p')
 	{
 		g_bf.buf[g_bf.i++] = '0';
 		g_bf.buf[g_bf.i++] = 'x';
@@ -45,7 +46,7 @@ void	pars_wm(char *str, int len)
 {
 	if (g_fl.pl == 1 && str[0] != '-' && g_lst.width < len
 		&& g_lst.type != 'u')
-		g_bf.buf[g_bf.i++] = '+';
+			g_bf.buf[g_bf.i++] = '+';
 	if (g_fl.sp == 1 && str[0] != '-' && g_fl.pl == 0 && g_lst.prec < 1
 		&& g_lst.type != 'u')
 			g_bf.buf[g_bf.i++] = ' ';
@@ -53,8 +54,9 @@ void	pars_wm(char *str, int len)
 	(str[0] == '-' && g_fl.zr == 1 && g_fl.pl == 0) ? g_lst.width-- : 0;
 	(str[0] == '-' && g_fl.zr == 0 && g_fl.pl == 0) ? g_lst.width-- : 0;
 	(g_lst.type == 'o' && g_fl.oc == 1) ? g_lst.width-- : 0;
-	if ((g_lst.type == 'x' || g_lst.type == 'X') && g_fl.oc == 1)
-		g_lst.width -= 2;
+	if ((g_lst.type == 'x' || g_lst.type == 'X' || g_lst.type == 'p')
+		&& g_fl.oc == 1)
+			g_lst.width -= 2;
 }
 
 void	without_minus(char *str, int len)
