@@ -6,7 +6,7 @@
 /*   By: kosadchu <kosadchu@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:47:51 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/03/15 15:56:53 by kosadchu         ###   ########.fr       */
+/*   Updated: 2019/03/21 14:42:45 by kosadchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,10 @@ void	heximal(const char *f, va_list ap)
 	(f[g_bf.it] == 'p') ? s = ft_itoa_bs_pf(0, u, 16) : 0;
 	len = ft_strlen(s);
 	two_zero(s, len);
-	(g_lst.prec < len) ? g_lst.prec = 0 : 0;
-	(g_lst.width < len) ? g_lst.width = 0 : 0;
-	make_prec_width(len);
+	(g_fl.zr == 1 && g_lst.prec > 0) ? g_fl.zr = 2 : 0;
+	(g_lst.prec <= len) ? g_lst.prec = 0 : 0;
+	(g_lst.width <= len) ? g_lst.width = 0 : 0;
+	make_prec_width(s, len);
 	if (g_fl.mn == 1)
 		if_minus(s, len);
 	else
@@ -54,9 +55,10 @@ void	decimal(const char *f, va_list ap)
 	two_zero(s, len);
 	(d < 0) ? len -= 1 : 0;
 	(d < 0  && g_fl.mn == 1) ? g_lst.width -= 1 : 0;
-	(g_lst.prec < len) ? g_lst.prec = 0 : 0;
-	(g_lst.width < len) ? g_lst.width = 0 : 0;
-	make_prec_width(len);
+	(g_fl.zr == 1 && g_lst.prec > 0) ? g_fl.zr = 2 : 0;
+	(g_lst.prec <= len) ? g_lst.prec = 0 : 0;
+	(g_lst.width <= len) ? g_lst.width = 0 : 0;
+	make_prec_width(s, len);
 	(d < 0) ? len += 1 : 0;
 	if (g_fl.mn == 1)
 		if_minus(s, len);

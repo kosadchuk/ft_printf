@@ -6,7 +6,7 @@
 /*   By: kosadchu <kosadchu@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 13:44:51 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/03/14 16:24:56 by kosadchu         ###   ########.fr       */
+/*   Updated: 2019/03/21 20:05:53 by kosadchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,14 @@
 # include <stdint.h>
 # include <stdio.h>
 # include <limits.h>
+# include <string.h>
 
 typedef struct	s_bf
 {
 	char		buf[4096];
 	int			i;
 	int			it;
+	unsigned	ret;
 }				t_bf;
 
 typedef struct	s_lst
@@ -61,6 +63,7 @@ void			save_flags(const char *f);
 void			str_char(const char *f, va_list ap);
 void			check_width(const char *f);
 void			print_space(char *s, int len);
+void			print_buf(void);
 void			decimal(const char *f, va_list ap);
 void			numbers(const char *f, va_list ap);
 void			free_flags(void);
@@ -74,7 +77,7 @@ size_t			ft_strlen(const char *s);
 void			ft_bzero(void *s, size_t n);
 void			pars_char(char c, int len);
 void			space(int len, char c);
-void			make_prec_width(int len);
+void			make_prec_width(char *str, int len);
 void			without_minus(char *str, int len);
 void			if_minus(char *str, int len);
 void			pars_wm(char *str, int len);

@@ -6,7 +6,7 @@
 /*   By: kosadchu <kosadchu@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 16:50:30 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/03/18 19:51:55 by kosadchu         ###   ########.fr       */
+/*   Updated: 2019/03/21 18:47:12 by kosadchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,13 +116,14 @@ void	check_spec(const char *f, va_list ap)
 		check_prec(f);
 	if (ft_strchr("lhL", f[g_bf.it]))
 		save_size(f);
-	if (ft_strchr("sc", f[g_bf.it]))
-		str_char(f, ap);
-	if (ft_strchr("diouxXp", f[g_bf.it]))
-		numbers(f, ap);
-	if (f[g_bf.it] == '%')
-		pars_char('%', 1);
-	g_bf.it++;
-//	(f[g_bf.it] == '.' && f[g_bf.it + 1] != '%'
-//		&& f[g_bf.it + 1] != '\n') ? g_bf.it++ : 0;
+	if (ft_strchr("scdiouxXp%", f[g_bf.it]))
+	{
+		if (ft_strchr("sc", f[g_bf.it]))
+			str_char(f, ap);
+		if (ft_strchr("diouxXp", f[g_bf.it]))
+			numbers(f, ap);
+		if (f[g_bf.it] == '%')
+			pars_char('%', 1);
+		g_bf.it++;
+	}
 }

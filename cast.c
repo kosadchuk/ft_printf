@@ -6,7 +6,7 @@
 /*   By: kosadchu <kosadchu@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 13:55:45 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/03/15 15:53:07 by kosadchu         ###   ########.fr       */
+/*   Updated: 2019/03/21 14:44:48 by kosadchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,48 +59,17 @@ void	two_zero(char *num, int len)
 	}
 }
 
-void	cpy_str(void)
-{
-	char	*s;
-	char	*tmp;
-	int		i;
-
-	i = 0;
-	s = ft_strsub(g_bf.buf, g_fl.save_i, g_bf.i - g_fl.save_i);
-	while (g_bf.i > g_fl.save_i)
-		g_bf.i--;
-	while (s[i])
-	{
-		if (s[i] == '0')
-		{
-			if (g_lst.width > 0)
-				g_bf.buf[g_bf.i++] = ' ';
-			i++;
-		}
-		g_bf.buf[g_bf.i++] = s[i];
-		i++;
-	}
-	tmp = s;
-	free(tmp);
-}
-
 void	clean_zero(void)
 {
-	if (g_fl.two_zr == 2)
+	if (g_fl.two_zr == 2 && g_fl.oc != 1)
 	{
-		if (g_lst.bftype == 'o' && g_lst.type == 'o' && g_fl.oc == 1
-			&& g_fl.oc2 == 1)
-				cpy_str();
-		else
+		while (g_bf.i >= g_fl.save_i)
 		{
-			while (g_bf.i >= g_fl.save_i)
-			{
 			if (g_bf.buf[g_bf.i] == '0')
 				g_bf.buf[g_bf.i] = ' ';
 			g_bf.i--;
-			}
-			g_bf.i += g_fl.sh1 + g_fl.sh2 + 2;
 		}
+		g_bf.i += g_fl.sh1 + g_fl.sh2 + 2;
 		g_fl.two_zr = 0;
 		g_fl.sh1 = 0;
 		g_fl.sh2 = 0;
