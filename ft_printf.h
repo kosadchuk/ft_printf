@@ -6,7 +6,7 @@
 /*   By: kosadchu <kosadchu@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 13:44:51 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/03/21 20:05:53 by kosadchu         ###   ########.fr       */
+/*   Updated: 2019/04/01 14:39:30 by kosadchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # include <stdint.h>
 # include <stdio.h>
 # include <limits.h>
-# include <string.h>
 
 typedef struct	s_bf
 {
@@ -34,7 +33,7 @@ typedef struct	s_lst
 	int			prec;
 	int			dot;
 	char		type;
-	char		bftype;
+	int			nine;
 	char		sz[2];
 }				t_lst;
 
@@ -43,13 +42,11 @@ typedef struct	s_fl
 	int			mn;
 	int			pl;
 	int			oc;
-	int			oc2;
+	int			pr_n;
 	int			zr;
 	int			sp;
 	int			two_zr;
 	int			save_i;
-	int			sh1;
-	int			sh2;
 }				t_fl;
 
 t_bf			g_bf;
@@ -67,9 +64,8 @@ void			print_buf(void);
 void			decimal(const char *f, va_list ap);
 void			numbers(const char *f, va_list ap);
 void			free_flags(void);
-char			*ft_itoa_bs_pf(intmax_t d, uintmax_t u, int base);
+char			*ft_itoa_bs_pf(__int128_t d, uintmax_t u, int base);
 void			*ft_memalloc(size_t size);
-void			ft_putstr(char const *s);
 char			*ft_strchr(const char *s, int c);
 char			*ft_strsub(char const *s, unsigned int start, size_t len);
 int				ft_atoi(const char *str);
@@ -85,5 +81,15 @@ void			two_zero(char *num, int len);
 void			clean_zero(void);
 intmax_t		cast_dec(va_list ap);
 uintmax_t		cast_hex(va_list ap);
+long double		cast_flo(va_list ap);
+char			*ft_strjoin(char const *s1, char const *s2);
+char			*ft_strdup(const char *s1);
+int				ft_lenint(__int128_t d);
+void			flo(va_list ap);
+void			minus_zero(double i, __int128_t d);
+void			inf_nan(long double x);
+void			if_oct(char *s, int l);
+int				if_dot(const char *f);
+void			pars_wm(char *str, int len);
 
 #endif

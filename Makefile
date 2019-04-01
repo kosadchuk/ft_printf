@@ -6,7 +6,7 @@
 #    By: kosadchu <kosadchu@student.unit.ua>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/11 15:24:32 by kosadchu          #+#    #+#              #
-#    Updated: 2019/03/11 17:00:05 by kosadchu         ###   ########.fr        #
+#    Updated: 2019/04/01 14:18:53 by kosadchu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,13 +20,12 @@ SRCS :=	ft_printf.c \
 		spec.c \
 		decimal.c \
 		ft_itoa_bs_pf.c \
-		ft_strchr.c \
-		ft_putstr.c \
-		ft_memalloc.c \
-		ft_strsub.c \
-		ft_atoi.c \
-		ft_strlen.c \
-		ft_bzero.c
+		parsing.c \
+		cast.c \
+		float.c \
+		lib_func1.c \
+		lib_func2.c \
+		other_func.c
 
 OBJ := ft_printf.o \
 		format.o \
@@ -34,13 +33,12 @@ OBJ := ft_printf.o \
 		spec.o \
 		decimal.o \
 		ft_itoa_bs_pf.o \
-		ft_strchr.o \
-		ft_putstr.o \
-		ft_memalloc.o \
-		ft_strsub.o \
-		ft_atoi.o \
-		ft_strlen.o \
-		ft_bzero.o
+		parsing.o \
+		cast.o \
+		float.o \
+		lib_func1.o \
+		lib_func2.o \
+		other_func.o
 
 INCLD := ft_printf.h
 

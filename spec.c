@@ -6,7 +6,7 @@
 /*   By: kosadchu <kosadchu@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 16:50:30 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/03/21 18:47:12 by kosadchu         ###   ########.fr       */
+/*   Updated: 2019/04/01 14:38:34 by kosadchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	check_width(const char *f)
 	}
 	s = ft_strsub(f, g_bf.it - len, len);
 	tmp = s;
-	free (tmp);
+	free(tmp);
 	g_lst.width = ft_atoi(s);
 }
 
@@ -35,20 +35,10 @@ void	check_prec(const char *f)
 	char	*s;
 	int		len;
 	char	*tmp;
+	int		check;
 
 	len = 0;
-	if (f[g_bf.it] == '.' && !ft_strchr("0123456789", f[g_bf.it + 1]))
-	{
-		g_lst.dot = 1;
-		g_bf.it++;
-	}
-	else if (f[g_bf.it] == '.' && f[g_bf.it + 1] == '0'
-		&& !ft_strchr("123456789", f[g_bf.it + 2]))
-	{
-		g_lst.dot = 1;
-		g_bf.it += 2;
-	}
-	else
+	if ((check = if_dot(f)) == 0)
 	{
 		g_bf.it++;
 		while (ft_strchr("0123456789", f[g_bf.it]))
@@ -58,7 +48,7 @@ void	check_prec(const char *f)
 		}
 		s = ft_strsub(f, g_bf.it - len, len);
 		tmp = s;
-		free (tmp);
+		free(tmp);
 		g_lst.prec = ft_atoi(s);
 	}
 }
@@ -83,25 +73,27 @@ void	save_flags(const char *f)
 
 void	save_size(const char *f)
 {
-	if (f[g_bf.it] == 'l' && ft_strchr("diouxXf", f[g_bf.it + 1]))
+	if (f[g_bf.it] == 'l' && f[g_bf.it + 1] != 'l')
 		g_lst.sz[0] = 'l';
-	else if (f[g_bf.it] == 'l' && f[g_bf.it + 1] == 'l'
-			&& ft_strchr("diouxXf", f[g_bf.it + 2]))
+	else if (f[g_bf.it] == 'l' && f[g_bf.it + 1] == 'l')
 	{
 		g_lst.sz[0] = 'l';
 		g_lst.sz[1] = 'l';
-		g_bf.it++;
+		while (f[g_bf.it] == 'l')
+			g_bf.it++;
+		g_bf.it--;
 	}
-	else if (f[g_bf.it] == 'h' && ft_strchr("diouxXf", f[g_bf.it + 1]))
+	else if (f[g_bf.it] == 'h' && f[g_bf.it + 1] != 'h')
 		g_lst.sz[0] = 'h';
-	else if (f[g_bf.it] == 'h' && f[g_bf.it + 1] == 'h'
-			&& ft_strchr("diouxXf", f[g_bf.it + 2]))
+	else if (f[g_bf.it] == 'h' && f[g_bf.it + 1] == 'h')
 	{
 		g_lst.sz[0] = 'h';
 		g_lst.sz[1] = 'h';
-		g_bf.it++;
+		while (f[g_bf.it] == 'h')
+			g_bf.it++;
+		g_bf.it--;
 	}
-	else if (f[g_bf.it] == 'L' && f[g_bf.it + 1] == 'f')
+	else if (f[g_bf.it] == 'L')
 		g_lst.sz[0] = 'L';
 	g_bf.it++;
 }
@@ -116,11 +108,11 @@ void	check_spec(const char *f, va_list ap)
 		check_prec(f);
 	if (ft_strchr("lhL", f[g_bf.it]))
 		save_size(f);
-	if (ft_strchr("scdiouxXp%", f[g_bf.it]))
+	if (ft_strchr("scdiouxXpf%", f[g_bf.it]))
 	{
 		if (ft_strchr("sc", f[g_bf.it]))
 			str_char(f, ap);
-		if (ft_strchr("diouxXp", f[g_bf.it]))
+		if (ft_strchr("diouxXpf", f[g_bf.it]))
 			numbers(f, ap);
 		if (f[g_bf.it] == '%')
 			pars_char('%', 1);

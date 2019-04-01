@@ -6,13 +6,13 @@
 /*   By: kosadchu <kosadchu@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 16:13:19 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/03/13 19:49:11 by kosadchu         ###   ########.fr       */
+/*   Updated: 2019/03/31 16:23:36 by kosadchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	print_space(char *s, int len)
+void		print_space(char *s, int len)
 {
 	if (g_fl.mn == 1)
 	{
@@ -40,7 +40,7 @@ static void	pars_str(char *s, int len)
 		save_buff(s, len, 0);
 }
 
-void	pars_char(char c, int len)
+void		pars_char(char c, int len)
 {
 	if (g_lst.width > len)
 	{
@@ -52,7 +52,8 @@ void	pars_char(char c, int len)
 		}
 		else
 		{
-			space(g_lst.width, ' ');
+			(g_fl.zr > 0) ? space(g_lst.width, '0') : 0;
+			(g_fl.zr == 0) ? space(g_lst.width, ' ') : 0;
 			g_bf.buf[g_bf.i++] = c;
 		}
 	}
@@ -60,7 +61,7 @@ void	pars_char(char c, int len)
 		g_bf.buf[g_bf.i++] = c;
 }
 
-void	str_char(const char *f, va_list ap)
+void		str_char(const char *f, va_list ap)
 {
 	char	*s;
 	char	ch;

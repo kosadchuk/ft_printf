@@ -6,11 +6,50 @@
 /*   By: kosadchu <kosadchu@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:47:51 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/03/21 14:42:45 by kosadchu         ###   ########.fr       */
+/*   Updated: 2019/03/31 17:20:56 by kosadchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+void	inf_nan(long double x)
+{
+	char *s;
+	char *tmp;
+
+	if (x != x)
+	{
+		s = ft_strdup("nan");
+		save_buff(s, 3, 0);
+	}
+	if (x * 2 == x && x < 0)
+	{
+		s = ft_strdup("-inf");
+		save_buff(s, 4, 0);
+	}
+	if (x * 2 == x && x > 0)
+	{
+		s = ft_strdup("inf");
+		save_buff(s, 3, 0);
+	}
+	tmp = s;
+	free(tmp);
+}
+
+void	minus_zero(double i, __int128_t d)
+{
+	long long *tmp;
+	long long bitmove;
+	long long j;
+
+	tmp = (long long *)(&i);
+	bitmove = *tmp;
+	j = bitmove >> 63;
+	if (j < 0 && d == 0)
+		g_fl.pr_n = 1;
+	else
+		g_fl.pr_n = 0;
+}
 
 void	heximal(const char *f, va_list ap)
 {
@@ -54,7 +93,7 @@ void	decimal(const char *f, va_list ap)
 	len = ft_strlen(s);
 	two_zero(s, len);
 	(d < 0) ? len -= 1 : 0;
-	(d < 0  && g_fl.mn == 1) ? g_lst.width -= 1 : 0;
+	(d < 0 && g_fl.mn == 1) ? g_lst.width -= 1 : 0;
 	(g_fl.zr == 1 && g_lst.prec > 0) ? g_fl.zr = 2 : 0;
 	(g_lst.prec <= len) ? g_lst.prec = 0 : 0;
 	(g_lst.width <= len) ? g_lst.width = 0 : 0;
@@ -71,7 +110,12 @@ void	numbers(const char *f, va_list ap)
 	if (f[g_bf.it] == 'd' || f[g_bf.it] == 'i')
 		decimal(f, ap);
 	if (f[g_bf.it] == 'o' || f[g_bf.it] == 'x' || f[g_bf.it] == 'X'
-		|| f[g_bf.it] == 'u' || f[g_bf.it] == 'p')
-			heximal(f, ap);
+	|| f[g_bf.it] == 'u' || f[g_bf.it] == 'p')
+		heximal(f, ap);
+	if (f[g_bf.it] == 'f')
+	{
+		g_lst.type = 'f';
+		flo(ap);
+	}
 	clean_zero();
 }

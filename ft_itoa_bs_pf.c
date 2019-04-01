@@ -6,7 +6,7 @@
 /*   By: kosadchu <kosadchu@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/28 16:23:50 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/03/15 17:32:28 by kosadchu         ###   ########.fr       */
+/*   Updated: 2019/03/31 17:43:53 by kosadchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,17 +50,17 @@ char	*uns_base(char *str, uintmax_t u, int base)
 	return (t);
 }
 
-void	conv(intmax_t *d, int *len, char **str, char **res)
+void	conv(__int128_t *d, int *len, char **str, char **res)
 {
 	((*d) < 0) ? (*res)[(*len)--] = (*str)[-((*d) % 10)] : 0;
 	((*d) >= 0) ? (*res)[(*len)--] = (*str)[(*d) % 10] : 0;
 	(*d) /= 10;
 }
 
-char	*base_ten(char *str, intmax_t d)
+char	*base_ten(char *str, __int128_t d)
 {
 	int			len;
-	intmax_t	tmp;
+	__int128_t	tmp;
 	char		*res;
 	int			min;
 
@@ -79,7 +79,7 @@ char	*base_ten(char *str, intmax_t d)
 	return (res);
 }
 
-char	*ft_itoa_bs_pf(intmax_t d, uintmax_t u, int base)
+char	*ft_itoa_bs_pf(__int128_t d, uintmax_t u, int base)
 {
 	char		*str;
 	char		*res;
@@ -93,7 +93,8 @@ char	*ft_itoa_bs_pf(intmax_t d, uintmax_t u, int base)
 		return (NULL);
 	if (d == 0 && u == 0)
 		return ("0");
-	if (base == 10 && (g_lst.type == 'd' || g_lst.type == 'i'))
+	if (base == 10 && (g_lst.type == 'd' || g_lst.type == 'i'
+	|| g_lst.type == 'f'))
 		res = base_ten(str, d);
 	if (g_lst.type == 'o')
 		res = uns_base(str, u, 8);

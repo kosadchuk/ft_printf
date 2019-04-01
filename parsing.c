@@ -6,80 +6,44 @@
 /*   By: kosadchu <kosadchu@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 20:20:10 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/03/21 16:23:27 by kosadchu         ###   ########.fr       */
+/*   Updated: 2019/04/01 14:48:06 by kosadchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	if_oct(char *s, int l)
+static void	prec_not_zero(char *str, int len)
 {
-	if ((g_lst.type == 'x' && g_fl.oc == 1 && !(s[0] == '0' && l == 1))
-		|| g_lst.type == 'p')
-	{
-		g_bf.buf[g_bf.i++] = '0';
-		g_bf.buf[g_bf.i++] = 'x';
-	}
-	else if (g_lst.type == 'X' && g_fl.oc == 1 && !(s[0] == '0' && l == 1))
-	{
-		g_bf.buf[g_bf.i++] = '0';
-		g_bf.buf[g_bf.i++] = 'X';
-	}
-	else if (g_lst.type == 'o' && g_fl.oc == 1 && g_fl.zr != 1 &&
-	(s[0] != '0' && l != 1))
-		g_bf.buf[g_bf.i++] = '0';
+	(str[0] == '-') ? g_bf.buf[g_bf.i++] = '-' : 0;
+	space(g_lst.prec, '0');
+	(str[0] == '-') ? save_buff(str, len, 1) : 0;
+	(str[0] != '-') ? save_buff(str, len, 0) : 0;
 }
 
-void	make_prec_width(char *str, int len)
+static void	save_without_minus(char *str, int len)
 {
-	if (g_lst.width > len || g_lst.prec > len)
-	{
-		(g_lst.prec > len) ? g_lst.prec -= len : 0;
-		(g_lst.width > len) ? g_lst.width -= len : 0;
-		if (g_lst.prec > g_lst.width)
-			g_lst.width = 0;
-		if (g_lst.width > g_lst.prec)
-			g_lst.width -= g_lst.prec;
-		if (g_lst.width > 0 && g_fl.zr == 0)
-			g_fl.sp = 0;
-		(str[0] == '0' && len == 1 &&
-		(g_lst.type == 'd' || g_lst.type == 'x') && g_lst.dot == 1)
-		? g_lst.width++ : 0;
-	}
+	if (str[0] == '0' && len == 1 && g_lst.dot == 1
+	&& !(g_lst.type == 'o' && g_fl.oc == 1))
+		len = 0;
+	save_buff(str, len, 0);
 }
 
-void	pars_wm(char *str, int len)
-{
-	if (g_fl.pl == 1 && str[0] != '-' && g_lst.width < len
-		&& g_lst.type != 'u')
-			g_bf.buf[g_bf.i++] = '+';
-	if (g_fl.sp == 1 && str[0] != '-' && g_fl.pl == 0 && g_fl.zr != 2
-		&& g_lst.type != 'u')
-			g_bf.buf[g_bf.i++] = ' ';
-	(g_fl.pl == 1 || (g_fl.pl == 1 && g_fl.zr == 1) 
-	|| (g_fl.zr == 1 && g_fl.sp == 1)) ? g_lst.width-- : 0;
-	(str[0] == '-' && (g_fl.zr == 1 || g_fl.zr == 2)
-	&& g_fl.pl == 0) ? g_lst.width-- : 0;
-	(str[0] == '-' && g_fl.zr == 0 && g_fl.pl == 0) ? g_lst.width-- : 0;
-	(g_lst.type == 'o' && g_fl.oc == 1 &&
-	(str[0] != '0' && len != 1)) ? g_lst.width-- : 0;
-	if (((g_lst.type == 'x' || g_lst.type == 'X' || g_lst.type == 'p')
-		&& g_fl.oc == 1) || g_lst.type == 'p')
-			g_lst.width -= 2;
-}
-
-void	without_minus(char *str, int len)
+void		without_minus(char *str, int len)
 {
 	pars_wm(str, len);
 	((g_lst.width > 0 && g_fl.zr == 0) || (g_lst.width > 0 && g_fl.zr == 1
-	&& g_lst.dot == 1) || (g_lst.width > 0 && g_fl.zr == 2))
+	&& g_lst.dot == 1 && g_lst.type != 'f')
+	|| (g_lst.width > 0 && g_fl.zr == 2))
 	? space(g_lst.width, ' ') : 0;
 	if_oct(str, len);
 	if (g_fl.pl == 1 && str[0] != '-' && g_bf.buf[g_bf.i - 1] != '+'
-		&& g_lst.type != 'u')
+	&& g_lst.type != 'u')
 		g_bf.buf[g_bf.i++] = '+';
-	if (g_lst.width > 0 && g_lst.dot < 1)
+	if ((g_lst.width > 0 && g_lst.dot < 1)
+	|| (g_lst.width > 0 && g_lst.type == 'f'))
 	{
+		if (g_fl.pr_n == 1)
+			g_bf.buf[g_bf.i++] = '-';
 		if (str[0] == '-')
 		{
 			str++;
@@ -88,29 +52,26 @@ void	without_minus(char *str, int len)
 		(g_fl.zr == 1) ? space(g_lst.width, '0') : 0;
 	}
 	if (g_lst.prec > 0)
-	{
-		(str[0] == '-') ? g_bf.buf[g_bf.i++] = '-' : 0;
-		space(g_lst.prec, '0');
-		(str[0] == '-') ? save_buff(str, len, 1) : 0;
-		(str[0] != '-') ? save_buff(str, len, 0) : 0;
-	}
+		prec_not_zero(str, len);
 	else
-	{
-		if (str[0] == '0' && len == 1 &&
-		(g_lst.type == 'd' || g_lst.type == 'x')
-		&& g_lst.dot == 1)
-			len = 0;
-		save_buff(str, len, 0);
-	}
+		save_without_minus(str, len);
 }
 
-void	if_minus(char *str, int len)
+void		pars_if_minus(char *str)
 {
-	(g_fl.pl == 1 && str[0] != '-') ? g_bf.buf[g_bf.i++] = '+' : 0;
+	(g_fl.pl == 1 && str[0] != '-' && g_lst.type != 'u')
+	? g_bf.buf[g_bf.i++] = '+' : 0;
 	if (g_fl.sp == 1 && str[0] != '-' && g_fl.pl == 0)
 		g_bf.buf[g_bf.i++] = ' ';
 	(g_fl.pl == 1 && str[0] != '-') ? g_lst.width-- : 0;
 	(str[0] == '-' && g_lst.prec > 0) ? g_bf.buf[g_bf.i++] = '-' : 0;
+	(g_fl.pr_n == 1) ? g_bf.buf[g_bf.i++] = '-' : 0;
+	(g_fl.pr_n == 1) ? g_lst.width-- : 0;
+}
+
+void		if_minus(char *str, int len)
+{
+	pars_if_minus(str);
 	if (g_lst.prec > 0)
 	{
 		if_oct(str, len);
@@ -128,8 +89,7 @@ void	if_minus(char *str, int len)
 			len = 0;
 		save_buff(str, len, 0);
 	}
-	if (((g_lst.type == 'x' || g_lst.type == 'X') && g_fl.oc == 1)
-	|| g_lst.type == 'p')
+	if ((g_lst.type == 'x' || g_lst.type == 'X') && g_fl.oc == 1)
 		g_lst.width -= 2;
 	(g_lst.type == 'o' && g_fl.oc == 1 &&
 	(str[0] != '0' && len != 1)) ? g_lst.width-- : 0;
