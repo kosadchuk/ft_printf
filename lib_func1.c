@@ -6,17 +6,17 @@
 /*   By: kosadchu <kosadchu@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 17:29:15 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/03/31 17:34:28 by kosadchu         ###   ########.fr       */
+/*   Updated: 2019/04/05 15:41:54 by kosadchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-char	*ft_strchr(const char *s, int c)
+char			*ft_strchr(const char *s, int c)
 {
-	char	ch;
-	char	*s1;
-	size_t	i;
+	char		ch;
+	char		*s1;
+	size_t		i;
 
 	ch = (char)c;
 	s1 = (char *)s;
@@ -32,9 +32,9 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
-void	*ft_memalloc(size_t size)
+void			*ft_memalloc(size_t size)
 {
-	char	*m;
+	char		*m;
 
 	m = malloc(sizeof(*m) * size);
 	if (!m)
@@ -43,10 +43,10 @@ void	*ft_memalloc(size_t size)
 	return (m);
 }
 
-char	*ft_strsub(char const *s, unsigned int start, size_t len)
+char			*ft_strsub(char const *s, unsigned int start, size_t len)
 {
-	char	*sub;
-	size_t	i;
+	char		*sub;
+	size_t		i;
 
 	i = 0;
 	if (!s)
@@ -66,9 +66,9 @@ char	*ft_strsub(char const *s, unsigned int start, size_t len)
 	return (sub);
 }
 
-size_t	ft_strlen(const char *s)
+size_t			ft_strlen(const char *s)
 {
-	int		i;
+	int			i;
 
 	i = 0;
 	while (s[i] != '\0')
@@ -76,10 +76,10 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-int		ft_atoi(const char *str)
+__int128_t		ft_atoi(const char *str)
 {
 	size_t		i;
-	long int	j;
+	__int128_t	j;
 	int			x;
 
 	i = 0;
@@ -93,12 +93,6 @@ int		ft_atoi(const char *str)
 		i++;
 	while (str[i] != '\0' && (str[i] >= '0' && str[i] <= '9'))
 	{
-		if ((j > 922337203685477580 || (j == 922337203685477580
-			&& (str[i] - '0') > 7)) && x == 1)
-			return (-1);
-		else if ((j > 922337203685477580 || (j == 922337203685477580
-			&& (str[i] - '0') > 8)) && x == -1)
-			return (0);
 		j = (j * 10) + (str[i] - '0');
 		i++;
 	}

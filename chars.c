@@ -26,14 +26,20 @@ void		print_space(char *s, int len)
 	}
 }
 
-static void	pars_str(char *s, int len)
+void		pars_str(char *s)
 {
+	int		len;
+
+	(!s) ? s = "(null)" : 0;
+	len = ft_strlen(s);
 	(g_lst.prec > 0 && g_lst.prec < len) ? len = g_lst.prec : len;
 	if (g_lst.width > len && g_lst.dot != 1)
 	{
 		g_lst.width -= len;
 		print_space(s, len);
 	}
+	else if (g_lst.width > 0 && g_lst.dot == 1 && g_fl.zr > 0 && g_fl.mn != 1)
+		space(g_lst.width, '0');
 	else if (g_lst.width > 0 && g_lst.dot == 1)
 		space(g_lst.width, ' ');
 	else if (g_lst.dot != 1)
@@ -65,14 +71,11 @@ void		str_char(const char *f, va_list ap)
 {
 	char	*s;
 	char	ch;
-	int		len;
 
 	if (f[g_bf.it] == 's')
 	{
-		s = va_arg(ap, char *);
-		(!s) ? s = "(null)" : s;
-		len = ft_strlen(s);
-		pars_str(s, len);
+		s = va_arg(ap, char*);
+		pars_str(s);
 	}
 	if (f[g_bf.it] == 'c')
 	{

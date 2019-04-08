@@ -6,50 +6,11 @@
 /*   By: kosadchu <kosadchu@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:47:51 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/03/31 17:20:56 by kosadchu         ###   ########.fr       */
+/*   Updated: 2019/04/05 15:36:59 by kosadchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-void	inf_nan(long double x)
-{
-	char *s;
-	char *tmp;
-
-	if (x != x)
-	{
-		s = ft_strdup("nan");
-		save_buff(s, 3, 0);
-	}
-	if (x * 2 == x && x < 0)
-	{
-		s = ft_strdup("-inf");
-		save_buff(s, 4, 0);
-	}
-	if (x * 2 == x && x > 0)
-	{
-		s = ft_strdup("inf");
-		save_buff(s, 3, 0);
-	}
-	tmp = s;
-	free(tmp);
-}
-
-void	minus_zero(double i, __int128_t d)
-{
-	long long *tmp;
-	long long bitmove;
-	long long j;
-
-	tmp = (long long *)(&i);
-	bitmove = *tmp;
-	j = bitmove >> 63;
-	if (j < 0 && d == 0)
-		g_fl.pr_n = 1;
-	else
-		g_fl.pr_n = 0;
-}
 
 void	heximal(const char *f, va_list ap)
 {
@@ -87,7 +48,7 @@ void	decimal(const char *f, va_list ap)
 	int			len;
 
 	(f[g_bf.it] == 'd') ? g_lst.type = 'd' : 0;
-	(f[g_bf.it] == 'i') ? g_lst.type = 'i' : 0;
+	(f[g_bf.it] == 'i') ? g_lst.type = 'd' : 0;
 	d = cast_dec(ap);
 	s = ft_itoa_bs_pf(d, 0, 10);
 	len = ft_strlen(s);

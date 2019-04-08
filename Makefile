@@ -6,13 +6,13 @@
 #    By: kosadchu <kosadchu@student.unit.ua>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/11 15:24:32 by kosadchu          #+#    #+#              #
-#    Updated: 2019/04/01 14:18:53 by kosadchu         ###   ########.fr        #
+#    Updated: 2019/04/06 13:05:54 by kosadchu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := libftprintf.a
 
-CFLAGS := -c -Wall -Wextra -Werror
+CFLAGS := -c -Wall -Wextra -Werror 
 
 SRCS :=	ft_printf.c \
 		format.c \
@@ -23,6 +23,7 @@ SRCS :=	ft_printf.c \
 		parsing.c \
 		cast.c \
 		float.c \
+		float2.c \
 		lib_func1.c \
 		lib_func2.c \
 		other_func.c
@@ -36,6 +37,7 @@ OBJ := ft_printf.o \
 		parsing.o \
 		cast.o \
 		float.o \
+		float2.o \
 		lib_func1.o \
 		lib_func2.o \
 		other_func.o
@@ -43,7 +45,7 @@ OBJ := ft_printf.o \
 INCLD := ft_printf.h
 
 all: $(NAME)
-$(NAME): $(OBJ)
+$(NAME): $(OBJ) $(INCLD)
 	gcc $(CFLAGS) $(SRCS) -I $(INCLD)
 	ar rc $(NAME) $(OBJ)
 clean:

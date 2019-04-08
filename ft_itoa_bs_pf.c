@@ -93,8 +93,7 @@ char	*ft_itoa_bs_pf(__int128_t d, uintmax_t u, int base)
 		return (NULL);
 	if (d == 0 && u == 0)
 		return ("0");
-	if (base == 10 && (g_lst.type == 'd' || g_lst.type == 'i'
-	|| g_lst.type == 'f'))
+	if (base == 10 && (g_lst.type == 'd' || g_lst.type == 'f'))
 		res = base_ten(str, d);
 	if (g_lst.type == 'o')
 		res = uns_base(str, u, 8);

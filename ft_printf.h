@@ -6,7 +6,7 @@
 /*   By: kosadchu <kosadchu@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 13:44:51 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/04/01 14:39:30 by kosadchu         ###   ########.fr       */
+/*   Updated: 2019/04/05 15:40:49 by kosadchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include <stdlib.h>
 # include <stdarg.h>
 # include <stdint.h>
-# include <stdio.h>
 # include <limits.h>
 
 typedef struct	s_bf
@@ -35,6 +34,7 @@ typedef struct	s_lst
 	char		type;
 	int			nine;
 	char		sz[2];
+	int			ecsp;
 }				t_lst;
 
 typedef struct	s_fl
@@ -68,7 +68,7 @@ char			*ft_itoa_bs_pf(__int128_t d, uintmax_t u, int base);
 void			*ft_memalloc(size_t size);
 char			*ft_strchr(const char *s, int c);
 char			*ft_strsub(char const *s, unsigned int start, size_t len);
-int				ft_atoi(const char *str);
+__int128_t		ft_atoi(const char *str);
 size_t			ft_strlen(const char *s);
 void			ft_bzero(void *s, size_t n);
 void			pars_char(char c, int len);
@@ -91,5 +91,7 @@ void			inf_nan(long double x);
 void			if_oct(char *s, int l);
 int				if_dot(const char *f);
 void			pars_wm(char *str, int len);
+void			pars_str(char *s);
+void			print_nan(char *s, int len);
 
 #endif

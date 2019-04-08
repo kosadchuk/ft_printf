@@ -6,7 +6,7 @@
 /*   By: kosadchu <kosadchu@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 17:15:06 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/03/31 17:22:45 by kosadchu         ###   ########.fr       */
+/*   Updated: 2019/04/05 15:39:23 by kosadchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ static void		make_str_s2(__int128_t d, long double x, int len, char *s)
 		i++;
 	}
 	i--;
-	if (s[i] > '5')
+	(s[i] > '0') ? g_lst.ecsp = 1 : 0;
+	if (s[i] >= '5')
 	{
 		while (s[i - 1] == '9')
 		{
@@ -87,19 +88,14 @@ char			*make_s2(__int128_t d, long double x)
 	g_lst.nine = 0;
 	i = 0;
 	len = g_lst.prec;
-	if (g_lst.sz[0] == 'L')
-		len = ft_lenint(d);
-	s = (char *)ft_memalloc(sizeof(char) * len + 2);
+	(g_lst.dot == 1) ? len = 19 : 0;
 	(d < 0) ? d *= -1 : 0;
 	(x < 0) ? x *= -1 : 0;
-	if (g_lst.sz[0] == 'L')
-		s = ft_itoa_bs_pf(d, 0, 10);
-	else
-		make_str_s2(d, x, len, s);
-	while (s[i] != '\0')
+	s = (char *)ft_memalloc(sizeof(char) * len + 2);
+	make_str_s2(d, x, len, s);
+	while (s[i] != '\0' && i < g_lst.prec)
 		i++;
-	(g_lst.sz[0] != 'L') ? s[i - 1] = '\0' : 0;
-	(g_lst.sz[0] == 'L') ? s[i] = '\0' : 0;
+	s[i] = '\0';
 	return (s);
 }
 
@@ -118,16 +114,16 @@ void			flo(va_list ap)
 		d = (__int128_t)x;
 		minus_zero(x, d);
 		(g_lst.prec == 0) ? g_lst.prec = 6 : 0;
-		if (g_lst.sz[0] != 'L')
-		{
-			s2 = make_s2(d, x);
-			(((g_lst.dot == 1 && s2[0] == '5' && d % 10 != 2 && d % 2 != 0)
-			|| (g_lst.dot == 1 && s2[0] > '5') || g_lst.nine == g_lst.prec)
-			&& g_lst.sz[0] != 'L') ? d = d + 1 : 0;
-		}
+		s2 = make_s2(d, x);
+		(((g_lst.dot == 1 && s2[0] == '5' && d % 10 != 2 && d % 2 != 0
+		&& d > 0) || (g_lst.dot == 1 && s2[0] > '5' && d >= 0)
+		|| g_lst.nine == g_lst.prec || (g_lst.dot == 1 && s2[0] >= '5'
+		&& g_lst.ecsp == 1)) && d >= 0) ? d = d + 1 : 0;
+		((g_lst.dot == 1 && s2[0] == '5' && d % 10 != 2 && d % 2 != 0
+		&& d < 0) || (g_lst.nine > 0 && d < 0)) ? d = d - 1 : 0;
 		s1 = ft_itoa_bs_pf(d, 0, 10);
 		(g_lst.dot == 1) ? with_dot(s1) : 0;
 		(g_lst.dot == 0) ? without_dot(s1, s2) : 0;
-		(g_lst.sz[0] != 'L') ? free(s2) : 0;
+		free(s2);
 	}
 }

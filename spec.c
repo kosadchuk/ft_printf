@@ -6,7 +6,7 @@
 /*   By: kosadchu <kosadchu@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 16:50:30 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/04/01 14:38:34 by kosadchu         ###   ########.fr       */
+/*   Updated: 2019/04/05 15:57:29 by kosadchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,9 @@ void	check_prec(const char *f)
 	char	*s;
 	int		len;
 	char	*tmp;
-	int		check;
 
 	len = 0;
-	if ((check = if_dot(f)) == 0)
+	if (if_dot(f) == 0)
 	{
 		g_bf.it++;
 		while (ft_strchr("0123456789", f[g_bf.it]))
